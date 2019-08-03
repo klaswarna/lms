@@ -1,39 +1,54 @@
 <template>
   <div class="helsida">
-      <h1>Välkommen till Ludwigs mattespel</h1>
-      <img alt="Ludwig" src="../assets/ludwig.png">
-    <p>
-      Här kan du välja olika räknesätt
+      <h1>Ludwigs mattespel</h1>
+      <img class="ludwigbild" alt="Ludwig" src="../assets/ludwig.png">
 
-    </p>
-    <ul>
 
-        <li>
-            <router-link class="linkstyle" to="/addition">
-          PLUS
-            </router-link>
-        </li>
-        <li>
-            <router-link class="linkstyle" to="/subtraktion">
-          MINUS
-            </router-link>
-        </li>
-        <li>
-            <router-link class="linkstyle" to="/multiplikation">
-          GÅNGER
-            </router-link>
-        </li>
-        <li>
-            <router-link class="linkstyle" to="/division">
-          DELAT MED
-            </router-link>
-        </li>
-        <li>
-            <router-link class="linkstyle" to="/avrundning">
-          AVRUNDNINGg
-            </router-link>
-        </li>
-    </ul>
+
+        <div class="nyrad">
+            <div class="knappgrupp">
+                <router-link class="linkstyle" to="/addition">
+                    <div class="raknesattknapp">
+                        +
+                    </div>
+                </router-link>
+
+
+                <router-link class="linkstyle" to="/subtraktion">
+                    <div class="raknesattknapp">
+                        –
+                    </div>
+                </router-link>
+            </div>
+        </div>
+
+
+        <div class="nyrad">
+            <div class="knappgrupp">
+                <router-link class="linkstyle" to="/multiplikation">
+                    <div class="raknesattknapp">
+                        •
+                    </div>
+                </router-link>
+
+                <router-link class="linkstyle" to="/division">
+                    <div class="raknesattknapp">
+                        ÷
+                    </div>
+                </router-link>
+            </div>
+        </div>
+
+        <div class="nyrad">
+            <div class="knappgrupp">
+                <router-link class="linkstyle" to="/avrundning">
+                    <div class="raknesattknapp">
+                      ≈
+                    </div>
+                </router-link>
+            </div>
+        </div>
+
 
   </div>
 </template>
@@ -69,9 +84,37 @@ a {
 }
 
 .linkstyle {
-    /*text-decoration: none;*/
-    color: green;
+    text-decoration: none;
 }
 
 
+.knappgrupp {
+    margin: auto;
+    display: inline-flex;
+}
+
+.raknesattknapp {
+    background-color: #59F;
+    width:50px;
+    height:50px;
+    border-radius: 10px;
+    border: solid 1px black;
+    margin: 10px;
+    text-align: center;
+    font-size: 40px;
+    color: black;
+}
+
+.raknesattknapp:hover {
+    background-color: #37D;
+
+}
+
+.nyrad {
+    display: flex;
+}
+
+.ludwigbild {
+    max-width: 80%;
+}
 </style>

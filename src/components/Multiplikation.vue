@@ -1,28 +1,69 @@
 <template>
-<div>
-<div class="addition">
+    <div class="helsida">
 
-<h1>Här räknar du multiplikation! öööö</h1>
-<p>Thoho va kul!!!!</p>
+    <h1>Multiplikation</h1>
 
-<router-link class="linkstyle" to="/">
-Hem
-</router-link>
+    <router-link class="linkstyle" to="/">
+    <i class="fa fa-home storre"></i>
 
+    </router-link>
 
 
+    <DigitalDigit :key="tillfalligpoang"/>
 
-</div>
+    <div class="fragan">
+
+    {{tal1}} • {{tal2}} =
+
+    </div>
 
 
 
-<Poang />
+    <div class="svaret">
 
-</div>
+    <input type="number" id="svaret" ref="svaret">
+
+    </div>
+
+    <div id="svarsknapp" v-on:click="kollaSvar">
+        SVARA
+    </div>
+
+
+    <div class="ratt" ref="ratt">
+        RÄTT
+    </div>
+
+    <div class="fel" ref="fel">
+        FEL
+    </div>
+
+    <div class="tabellval">
+        <br><br><b><u>Välj tabell</u></b><br>
+        <input type="radio" name="tabell"  v-on:click="tabell=1; uppdateraTal()" > 1 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=2; uppdateraTal()" > 2 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=3; uppdateraTal()"> 3 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=4; uppdateraTal()"> 4 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=5; uppdateraTal()"> 5<br>
+        <input type="radio" name="tabell"  v-on:click="tabell=6; uppdateraTal()"> 6 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=7; uppdateraTal()"> 7 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=8; uppdateraTal()"> 8 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=9; uppdateraTal()"> 9 &nbsp; &nbsp;
+        <input type="radio" name="tabell"  v-on:click="tabell=10; uppdateraTal()"> 10<br>
+
+        <input type="radio" name="tabell"  v-on:click="tabell=0; uppdateraTal()" checked="checked"> Alla<br>
+
+
+    </div>
+
+
+
+    </div>
+
 </template>
 
 <script>
-import Poang from './Poang.vue'
+import DigitalDigit from './DigitalDigit.vue'
 
 
 export default {
@@ -31,11 +72,77 @@ export default {
         msg: String
     },
     components: {
-        Poang
+        DigitalDigit
+    },
+    data: function () {
+        var talet2;
+        var talet1 = Math.floor(Math.random() * 10)
+        if (this.$session.get("tabell") > 0 ) {
+            talet2 = this.$session.get("tabell")
+        } else {
+            talet2 = Math.floor(Math.random() * 10)
+        }
+        return {
+            tal1: talet1,
+            tal2: talet2,
+            tillfalligpoang: this.$session.get("poang"),
+            tabell:0,
+        }
     },
     created () {
-            document.title = "Användare finns redan - EkoEnergiBörsen";
+            document.title = "Multiplikation";
+
     },
+    methods: {
+
+        kollaSvar: function() {
+            var that;
+
+            if (this.$refs.svaret.value == this.tal1 * this.tal2) {
+                this.$session.set("poang", this.$session.get("poang")+1);
+                this.tillfalligpoang = this.$session.get("poang");
+                this.$refs.ratt.style="display: block;"
+                that = this;
+                var talet2;
+                var talet1 = Math.floor(Math.random() * 10)
+
+                if (that.tabell > 0 ) {
+                    talet2 = that.tabell;
+                } else {
+                    talet2 = Math.floor(Math.random() * 10)
+                }
+
+                setTimeout(function(){
+                    that.$refs.ratt.style="display: none;"
+                    that.$refs.svaret.value = "";
+
+                    that.tal1 = talet1;
+                    that.tal2 = talet2;
+                }, 2010);
+            } else {
+                this.$refs.fel.style="display: block;"
+                that = this;
+                setTimeout(function(){
+                    that.$refs.fel.style="display: none;"
+                    that.$refs.svaret.value = "";
+                }, 1010);
+
+            }
+
+        },
+        uppdateraTal: function() {
+                var talet2;
+                var talet1 = Math.floor(Math.random() * 10)
+                if (this.tabell > 0 ) {
+                    talet2 = this.tabell;
+                } else {
+                    talet2 = Math.floor(Math.random() * 10)
+                }
+                this.tal1 = talet1;
+                this.tal2 = talet2;
+
+        }
+    }
 }
 </script>
 
@@ -75,13 +182,98 @@ h1 {
 }
 .linkstyle {
     text-decoration: none;
-    color: black;
+    color: #42b983;
 }
+
 .linkstyle:hover {
     color: white;
 }
 
 
+.storre {
+    font-size: 50px;
+}
+
+.fragan {
+    font-size: 3em;
+    font-family: serif;
+    color: white;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+#svaret {
+    font-size: 2em;
+    width: 5em;
+}
+
+#svarsknapp {
+    background-color: lightgreen;
+    border: solid black 2px;
+    border-radius: 10px;
+    width: 100px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px;
+    color: black;
+}
+#svarsknapp:hover {
+    background-color: green;
+}
+
+.ratt {
+    width: 130px;
+    height: 130px;
+    background: green;
+    font-size: 3em;
+    color: white;
+    border-radius: 65px;
+    text-align: center;
+    padding-top: 30px;
+    position :absolute;
+  -webkit-animation: mymove 2s; /* Safari 4.0 - 8.0 */
+  animation: mymove 2s;
+  display: none;
+  left: 50%;
+  margin-left:-65px;
+
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes mymove {
+  from {top: 500px;}
+  to {top: -130px;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  from {top: 500px;}
+  to {top: -130px;}
+}
+
+.fel {
+    width: 130px;
+    height: 130px;
+    background: red;
+    font-size: 3em;
+    color: white;
+    border-radius: 65px;
+    text-align: center;
+    padding-top: 30px;
+    top:200px;
+    position:absolute;
+    display: none;
+    left: 50%;
+    margin-left:-65px;
+}
 
 
 

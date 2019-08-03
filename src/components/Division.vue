@@ -1,28 +1,52 @@
 <template>
-<div>
-<div class="addition">
+    <div class="helsida">
 
-<h1>Här räknar du division!</h1>
-<p>Thoho va kul!!!!</p>
+    <h1>Division</h1>
 
-<router-link class="linkstyle" to="/">
-Hem
-</router-link>
+    <router-link class="linkstyle" to="/">
+    <i class="fa fa-home storre"></i>
 
+    </router-link>
 
 
+    <DigitalDigit :key="tillfalligpoang"/>
 
-</div>
+    <div class="fragan">
+
+    {{tal1}} / {{tal2}} =
+
+    </div>
 
 
 
-<Poang />
+    <div class="svaret">
 
-</div>
+    <input type="number" id="svaret" ref="svaret">
+
+    </div>
+
+    <div id="svarsknapp" v-on:click="kollaSvar">
+        SVARA
+    </div>
+
+
+    <div class="ratt" ref="ratt">
+        RÄTT
+    </div>
+
+    <div class="fel" ref="fel">
+        FEL
+    </div>
+
+
+
+
+    </div>
+
 </template>
 
 <script>
-import Poang from './Poang.vue'
+import DigitalDigit from './DigitalDigit.vue'
 
 
 export default {
@@ -31,11 +55,48 @@ export default {
         msg: String
     },
     components: {
-        Poang
+        DigitalDigit
+    },
+    data: function () {
+        var talet1 = Math.floor(Math.random() * 10)
+        var talet2 = Math.floor(Math.random() * 9) +1
+        return {
+            tal1: talet1 * talet2,
+            tal2: talet2,
+            tillfalligpoang: this.$session.get("poang"),
+        }
     },
     created () {
             document.title = "Division";
     },
+    methods: {
+        kollaSvar: function() {
+            var that;
+            if (this.$refs.svaret.value == this.tal1 / this.tal2) {
+                this.$session.set("poang", this.$session.get("poang")+1);
+                this.tillfalligpoang = this.$session.get("poang");
+                this.$refs.ratt.style="display: block;"
+                that = this;
+                setTimeout(function(){
+                    that.$refs.ratt.style="display: none;"
+                    that.$refs.svaret.value = "";
+                    var talet1 = Math.floor(Math.random() * 10);
+                    var talet2 = Math.floor(Math.random() * 9)+1;
+                    that.tal1 = talet1 * talet2;
+                    that.tal2= talet2;
+                }, 2010);
+            } else {
+                this.$refs.fel.style="display: block;"
+                that = this;
+                setTimeout(function(){
+                    that.$refs.fel.style="display: none;"
+                    that.$refs.svaret.value = "";
+                }, 1010);
+
+            }
+
+        }
+    }
 }
 </script>
 
@@ -75,14 +136,98 @@ h1 {
 }
 .linkstyle {
     text-decoration: none;
-    color: black;
+    color: #42b983;
 }
+
 .linkstyle:hover {
     color: white;
 }
 
 
+.storre {
+    font-size: 50px;
+}
 
+.fragan {
+    font-size: 3em;
+    font-family: serif;
+    color: white;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+#svaret {
+    font-size: 2em;
+    width: 5em;
+}
+
+#svarsknapp {
+    background-color: lightgreen;
+    border: solid black 2px;
+    border-radius: 10px;
+    width: 100px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px;
+    color: black;
+}
+#svarsknapp:hover {
+    background-color: green;
+}
+
+.ratt {
+    width: 130px;
+    height: 130px;
+    background: green;
+    font-size: 3em;
+    color: white;
+    border-radius: 65px;
+    text-align: center;
+    padding-top: 30px;
+    position :absolute;
+  -webkit-animation: mymove 2s; /* Safari 4.0 - 8.0 */
+  animation: mymove 2s;
+  display: none;
+  left: 50%;
+  margin-left:-65px;
+
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes mymove {
+  from {top: 500px;}
+  to {top: -130px;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  from {top: 500px;}
+  to {top: -130px;}
+}
+
+.fel {
+    width: 130px;
+    height: 130px;
+    background: red;
+    font-size: 3em;
+    color: white;
+    border-radius: 65px;
+    text-align: center;
+    padding-top: 30px;
+    top:200px;
+    position:absolute;
+    display: none;
+    left: 50%;
+    margin-left:-65px;
+}
 
 
 

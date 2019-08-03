@@ -1,6 +1,6 @@
 <template>
 
-    <div class="digiwrap">
+    <div class="digiwrap" v-on:click="nollstall" :key="poang">
 
         <div class="digitalDigit">
 
@@ -45,9 +45,15 @@ export default {
     },
     data: function () {
         return {
-            //slänga nåt i windows här kanske så variabeln gäller över alla
-            aktuelltNummer: this.$session.get("aktuelltNummer"),
+            poang: this.$session.get("poang"),
         }
+    },
+    methods: {
+        nollstall: function() {
+            this.$session.set("poang", 0);
+            this.poang = 0;
+
+        },
     },
     mounted: function() {
 
@@ -68,7 +74,7 @@ export default {
             };
 
 
-            var nummer = this.aktuelltNummer;
+            var nummer = this.poang;
             var left = Math.floor(nummer/10);
             var right = nummer - 10 * left;
             var pos = [left, right];
@@ -107,8 +113,6 @@ export default {
     },
     created () {
             document.title = "Addition"
-            //this.digitalDigit(85);
-
 
     }
 }
@@ -131,7 +135,7 @@ export default {
     width: 150px;
     background-color: grey;
     border-style: solid;
-    box-shadow: 10px 10px 5px grey;
+    /*box-shadow: 10px 10px 5px grey;*/
 }
 
 .innerWrap {
