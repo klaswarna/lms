@@ -68,6 +68,7 @@ export default {
     },
     created () {
             document.title = "Division";
+            this.$session.set("poang", this.$session.get("poang") || 0)
     },
     methods: {
         kollaSvar: function() {

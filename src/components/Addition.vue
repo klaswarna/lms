@@ -75,6 +75,7 @@ export default {
     },
     created () {
             document.title = "Addition";
+            this.$session.set("poang", this.$session.get("poang") || 0)
     },
     methods: {
         kollaSvar: function() {

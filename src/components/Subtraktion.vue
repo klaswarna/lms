@@ -67,6 +67,7 @@ export default {
     },
     created () {
             document.title = "Subtraktion";
+            this.$session.set("poang", this.$session.get("poang") || 0)
     },
     methods: {
         kollaSvar: function() {
@@ -80,7 +81,7 @@ export default {
                     that.$refs.ratt.style="display: none;"
                     that.$refs.svaret.value = "";
                     that.tal1 = Math.floor(Math.random() * 99);
-                    that.tal2 = Math.floor(Math.random() * that.tal2);
+                    that.tal2 = Math.floor(Math.random() * that.tal1);
                 }, 2010);
             } else {
                 this.$refs.fel.style="display: block;"

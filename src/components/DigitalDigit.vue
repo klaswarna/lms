@@ -27,8 +27,27 @@
             </div>
         </div>
 
-    </div>
+        <div class="vunnit" ref="vunnit">
+            Grattis!<br> <b>100</b> poäng!
+            <div class="omstart" v-on:click="nollstall">
 
+                <div class="lilltext">
+                    Du klarade spelet!
+                </div>
+
+
+                <router-link class="linkstyle" to="/">
+                <i class="fa fa-home storre"></i>
+                </router-link>
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
 
 
 
@@ -45,17 +64,20 @@ export default {
     },
     data: function () {
         return {
-            poang: this.$session.get("poang"),
+            poang: this.$session.get("poang") || 0,
         }
     },
     methods: {
         nollstall: function() {
             this.$session.set("poang", 0);
             this.poang = 0;
-
         },
     },
     mounted: function() {
+
+            if (this.$session.get("poang") > 99) {
+                this.$refs.vunnit.style="display: block";
+            }
 
              var digitalNumber = {
                  lines:[
@@ -112,8 +134,7 @@ export default {
 
     },
     created () {
-            document.title = "Addition"
-
+            document.title = "Addition";
     }
 }
 </script>
@@ -239,8 +260,28 @@ export default {
     background-color: #777777;
 }
 
+.vunnit {
+    color: red;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: pink;
+    display: none;
+}
+.lilltext {
+    color:black;
+    font-size: 0.4em;
+}
 
+.linkstyle {
+    text-decoration: none;
+    color: #42b983;
+}
 
-
+.linkstyle:hover {
+    color: white;
+}
 
 </style>

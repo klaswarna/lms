@@ -67,7 +67,8 @@ export default {
         }
     },
     created () {
-            document.title = "Användare finns redan - EkoEnergiBörsen";
+            document.title = "Avrundning | Ludwigs mattespel";
+            this.$session.set("poang", this.$session.get("poang") || 0)
     },
     methods: {
         kollaSvar: function() {

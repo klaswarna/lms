@@ -91,6 +91,7 @@ export default {
     },
     created () {
             document.title = "Multiplikation";
+            this.$session.set("poang", this.$session.get("poang") || 0)
 
     },
     methods: {
